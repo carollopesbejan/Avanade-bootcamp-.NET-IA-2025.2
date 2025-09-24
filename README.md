@@ -1,0 +1,1 @@
+# Avanade-bootcamp-.NET-IA-2025.2
