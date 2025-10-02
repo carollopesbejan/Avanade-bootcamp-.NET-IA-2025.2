@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  # Serviço do RabbitMQ
+  rabbitmq:
+    image: rabbitmq:3-management # Imagem oficial do RabbitMQ com a interface de gerenciamento
+    hostname: rabbitmq # Nome que os microserviços usarão para se conectar
+    ports:
+      - "5672:5672" # Porta padrão para comunicação AMQP (para os microserviços)
+      - "15672:15672" # Porta para a interface de gerenciamento web (http://localhost:15672)
+    environment:
+      # Credenciais padrão para o RabbitMQ
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 5s
+      timeout: 15s
+      retries: 5
+      start_period: 20s
+    # Mapeamento de volume opcional para persistir logs/dados, mas não é estritamente necessário para o desenvolvimento inicial
+    # volumes:
+    #   - rabbitmq_data:/var/lib/rabbitmq/mnesia
+  postgres:
+    image: postgres:15-alpine
+    hostname: postgres # Nome que será usado na Connection String
+    restart: always
+    environment:
+      POSTGRES_USER: userdb
+      POSTGRES_PASSWORD: passworddb
+      POSTGRES_DB: EstoqueDB # Nome do BD para o Estoque.API
+    ports:
+      - "5432:5432" # Porta padrão do PostgreSQL
+    
+# volumes:
+#   rabbitmq_data:
