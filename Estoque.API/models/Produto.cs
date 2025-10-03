@@ -17,6 +17,13 @@ namespace Estoque.API.Models
         // Descrição do produto.
         public string Descricao { get; set; }
 
+        [Required]
+        public string Categoria { get; set; } 
+
+        [Required]
+        public string Marca { get; set; }
+
+
         // Preço unitário do produto.
         public decimal Preco { get; set; }
 
