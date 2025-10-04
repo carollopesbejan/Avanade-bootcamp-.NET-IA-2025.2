@@ -5,17 +5,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization; // <<== ADICIONADO PARA O ATRIBUTO [Authorize]
+
 
 // Define a rota base da API: /api/Produtos
+[Authorize] // <<== PROTEÇÃO: EXIGE UM TOKEN JWT VÁLIDO
 [Route("api/[controller]")]
 [ApiController]
-// NOTE: Adicionaremos a autenticação [Authorize] na Fase 3.
 public class ProdutosController : ControllerBase
 {
     private readonly EstoqueContext _context;
 
     // INJEÇÃO DE DEPENDÊNCIA
-    // O construtor recebe o EstoqueContext, que é configurado no Program.cs.
     public ProdutosController(EstoqueContext context)
     {
         _context = context;
